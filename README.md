@@ -390,29 +390,36 @@ The project is intentionally being developed in public during this early phase.
 
 ---
 
-# Licensing & Commercialization
+# Licensing
 
-**License: To Be Determined**
+KRITVA OS is currently released under the **Apache License 2.0**.
 
-KRITVA OS is currently hosted as a public repository.
+The Apache License 2.0 permits use, modification, distribution, and integration of the software, subject to the terms and conditions of the license.
 
-Public availability should not be interpreted as a commitment that all KRITVA OS components will remain open source or freely licensed indefinitely.
+See the [`LICENSE`](LICENSE) file for the complete license text.
 
-The long-term licensing and commercialization strategy will be determined as the technology and ecosystem mature.
+## Commercialization
 
-Future possibilities may include different licensing or distribution models for:
+KRITVA OS is currently being developed as a public project during the early architecture, experimentation, and technology-validation phase.
 
-* Community components
-* Research and educational use
-* Developer tools
-* Core platform components
-* Commercial applications
+The current Apache-2.0 license applies to the code that is explicitly released under it.
+
+As the platform evolves, certain future components, services, hardware integrations, or separately developed technologies may be distributed under different licensing or commercial models where appropriate.
+
+The project may therefore evolve toward a model that combines:
+
+* Apache-2.0 community software
+* Open developer interfaces
+* Research and educational components
+* Commercial software components
 * Enterprise capabilities
-* Advanced AI capabilities
-* Safety and certification features
 * Hardware-specific integrations
+* Managed services
+* Proprietary AI models or capabilities
 
-The project architecture is therefore being designed to allow clear separation between foundational interfaces, community software, and potential commercial components.
+Any such future component will have its licensing terms clearly identified.
+
+> **Public today does not necessarily mean every future KRITVA component will remain Apache-2.0.**
 
 ---
 
