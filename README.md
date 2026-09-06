@@ -2,21 +2,21 @@
 
 ### Humanoid Robotics Operating System
 
-**KRITVA OS** is an open, modular operating system platform for building intelligent humanoid and embodied robots.
+**KRITVA OS** is a modular operating system platform for building intelligent humanoid and embodied robots.
 
-KRITVA OS is designed around a simple principle:
+KRITVA OS brings together the foundational software required for a robot to:
 
 > **Perceive → Understand → Decide → Act → Learn**
 
-The platform brings together real-time robotics, sensor perception, AI reasoning, motion control, skills, simulation, safety, and developer tooling into a unified software architecture.
+The platform is being designed to integrate real-time robotics, sensor perception, AI reasoning, motion control, skills, simulation, safety, hardware abstraction, and developer tooling into a coherent architecture.
 
 ---
 
 ## Vision
 
-Humanoid robots require more than a collection of drivers, middleware, and AI models.
+Humanoid robots require more than sensors, motor controllers, middleware, and AI models operating independently.
 
-They need an operating environment that can coordinate:
+They require an integrated software foundation capable of coordinating:
 
 * Sensors
 * Perception
@@ -33,13 +33,13 @@ They need an operating environment that can coordinate:
 
 **KRITVA OS aims to provide that foundation.**
 
-Our goal is to make it possible for robotics developers to focus on **what the robot should do**, rather than repeatedly building the underlying infrastructure required to make a robot perceive, reason, move, and act.
+The long-term vision is to make it possible for robotics developers to focus on **what a robot should accomplish**, rather than repeatedly building the infrastructure required to make the robot perceive, reason, move, and act.
 
 ---
 
-## Why KRITVA OS?
+# Why KRITVA OS?
 
-Today's robotics software is often assembled from multiple independent layers:
+A typical robotics software stack can look like:
 
 ```text
 Hardware
@@ -57,7 +57,7 @@ Motion Control
 Application
 ```
 
-KRITVA OS is designed as an integrated architecture:
+KRITVA OS is exploring a more integrated architecture:
 
 ```text
                     ┌───────────────────────┐
@@ -93,35 +93,35 @@ KRITVA OS is designed as an integrated architecture:
                     └────────────┬───────────┘
                                  │
                     ┌────────────▼───────────┐
-                    │       Robot Hardware   │
+                    │      Robot Hardware    │
                     │ Sensors • Actuators    │
                     │ Compute • Buses        │
                     └────────────────────────┘
 
-                    ┌─────────────────────────┐
-                    │       Kritva Sim        │
-                    │ Simulation • Digital    │
-                    │ Twin • SIL • HIL        │
-                    └─────────────────────────┘
+              ┌───────────────────────────────┐
+              │          Kritva Sim           │
+              │ Simulation • Digital Twin     │
+              │ SIL • HIL • Validation        │
+              └───────────────────────────────┘
 
-                    ┌─────────────────────────┐
-                    │       Kritva SDK        │
-                    │ APIs • Tools • Libraries│
-                    │ Developer Environment   │
-                    └─────────────────────────┘
+              ┌───────────────────────────────┐
+              │          Kritva SDK           │
+              │ APIs • Tools • Libraries      │
+              │ Developer Environment         │
+              └───────────────────────────────┘
 ```
 
 ---
 
-# Architecture
+# Platform Architecture
 
-KRITVA OS is organized into modular subsystems.
+KRITVA OS is organized around modular subsystems.
 
 ## Kritva Core
 
-The foundation of KRITVA OS.
+The foundational runtime of KRITVA OS.
 
-Responsibilities include:
+Planned responsibilities include:
 
 * Real-time runtime
 * Task scheduling
@@ -135,7 +135,7 @@ Responsibilities include:
 * Security foundations
 * Time synchronization
 
-The Core provides the execution environment on which the other KRITVA components operate.
+Kritva Core provides the execution environment on which other KRITVA components operate.
 
 ---
 
@@ -143,7 +143,7 @@ The Core provides the execution environment on which the other KRITVA components
 
 The perception and sensor framework.
 
-Responsibilities include:
+Planned capabilities include:
 
 * Camera interfaces
 * IMU
@@ -159,7 +159,7 @@ Responsibilities include:
 * Tracking
 * Environment perception
 
-The objective is to transform raw sensor data into a structured representation of the robot's environment.
+The objective is to transform raw sensor information into a structured representation of the robot and its environment.
 
 ---
 
@@ -167,7 +167,7 @@ The objective is to transform raw sensor data into a structured representation o
 
 The intelligence and reasoning layer.
 
-Responsibilities include:
+Planned capabilities include:
 
 * AI inference
 * World model
@@ -188,7 +188,7 @@ Kritva Mind connects perception with purposeful action.
 
 The physical control layer.
 
-Responsibilities include:
+Planned capabilities include:
 
 * Motor control
 * Joint control
@@ -204,22 +204,22 @@ Responsibilities include:
 * Motion planning
 * Safety limits
 
-The goal is to convert high-level intent into safe, coordinated physical movement.
+The objective is to convert high-level intent into safe, coordinated physical movement.
 
 ---
 
 ## Kritva Skill
 
-The reusable robot capability framework.
+The reusable capability and behavior framework.
 
-A **Skill** represents something the robot knows how to do.
+A **Skill** represents something that the robot knows how to do.
 
 Examples:
 
 ```text
-Walk()
 Stand()
 Sit()
+Walk()
 Reach()
 Grasp()
 Release()
@@ -231,27 +231,27 @@ Speak()
 LookAt()
 ```
 
-Skills can combine lower-level perception, reasoning, and motion capabilities into reusable behaviors.
+Skills can combine perception, reasoning, planning, and motion capabilities into reusable robot behaviors.
 
 Example:
 
 ```text
 PickObject()
     │
-    ├── Sense → DetectObject
-    ├── Mind  → SelectObject
+    ├── Sense  → DetectObject
+    ├── Mind   → SelectObject
     ├── Motion → MoveArm
     ├── Motion → Grasp
-    └── Sense → VerifyGrasp
+    └── Sense  → VerifyGrasp
 ```
 
-This creates a foundation for composable robot behaviors.
+This provides a foundation for composable and reusable robot capabilities.
 
 ---
 
 # Kritva Sim
 
-Simulation and validation environment for KRITVA OS.
+The simulation and validation environment for KRITVA OS.
 
 Kritva Sim is intended to support:
 
@@ -267,17 +267,17 @@ Kritva Sim is intended to support:
 * Scenario generation
 * Failure testing
 
-The long-term objective is:
+Long-term development objective:
 
-> **Develop in simulation → validate → deploy to the physical robot**
+> **Develop in simulation → Validate → Deploy to the physical robot**
 
 ---
 
 # Kritva SDK
 
-Developer platform for building applications and extending KRITVA OS.
+The developer platform for building applications and extending KRITVA OS.
 
-The SDK will provide:
+Planned capabilities include:
 
 * APIs
 * SDK libraries
@@ -291,7 +291,7 @@ The SDK will provide:
 * Development examples
 * Documentation
 
-Example future application:
+Example future API:
 
 ```python
 from kritva import Robot
@@ -306,7 +306,7 @@ robot.skills.pick("bottle")
 robot.skills.return_to("table")
 ```
 
-The exact API is **not yet frozen**.
+> **Note:** APIs shown above are illustrative and are not currently frozen.
 
 ---
 
@@ -316,47 +316,47 @@ KRITVA OS is being developed around the following principles.
 
 ### 1. Modular
 
-Components should be independently replaceable.
+Components should be independently replaceable and extensible.
 
 ### 2. Hardware Agnostic
 
-KRITVA OS should support different robot hardware platforms.
+The architecture should support different robot hardware platforms.
 
 ### 3. Real-Time
 
-Time-critical control paths must have deterministic behavior.
+Time-critical control paths should provide deterministic execution where required.
 
-### 4. AI Native
+### 4. AI-Native
 
-AI should be a first-class component rather than an external application bolted onto the robotics stack.
+AI should be a first-class part of the robotic software architecture rather than an external layer added on top.
 
 ### 5. Simulation First
 
-Major capabilities should be testable before deployment to physical hardware.
+Capabilities should be testable in simulation before deployment to physical robots wherever practical.
 
 ### 6. Safety First
 
-Robot actions must operate within defined safety boundaries.
+Robot actions must operate within defined physical and software safety boundaries.
 
 ### 7. Secure by Design
 
-Identity, communication, software integrity, access control, and update security should be architectural concerns.
+Identity, communication, software integrity, access control, updates, and system security should be considered architectural concerns.
 
 ### 8. Developer Friendly
 
-The platform should make it easy to build, test, debug, and deploy robot applications.
+The platform should make it easy to build, test, debug, simulate, and deploy robot applications.
 
 ### 9. Open Architecture
 
-Interfaces should be clearly defined so that hardware, AI models, sensors, and applications can evolve independently.
+Interfaces should be clearly defined so hardware, AI models, sensors, and applications can evolve independently.
 
 ---
 
 # Target Platforms
 
-KRITVA OS is initially intended for humanoid and embodied robotics platforms.
+KRITVA OS is initially focused on humanoid and embodied robotics.
 
-Potential hardware configurations include:
+Potential target platforms include:
 
 * ARM-based compute platforms
 * RISC-V platforms
@@ -366,13 +366,59 @@ Potential hardware configurations include:
 * Custom robotics SoCs
 * Distributed robot controllers
 
-The architecture should avoid unnecessary dependence on a specific processor, GPU, vendor, or robot manufacturer.
+The architecture aims to minimize unnecessary dependence on a specific processor, GPU, vendor, or robot manufacturer.
 
 ---
 
-# Development Strategy
+# Development Model
 
-KRITVA OS will initially be developed as a modular monorepo.
+KRITVA OS is currently maintained as a **public development repository**.
+
+The project is in an early architecture, experimentation, and technology-validation phase.
+
+The initial objectives are:
+
+* Validate the architecture
+* Build foundational components
+* Experiment with different approaches
+* Enable developer experimentation
+* Develop prototypes
+* Gather technical feedback
+* Evaluate potential applications and commercial opportunities
+
+The project is intentionally being developed in public during this early phase.
+
+---
+
+# Licensing & Commercialization
+
+**License: To Be Determined**
+
+KRITVA OS is currently hosted as a public repository.
+
+Public availability should not be interpreted as a commitment that all KRITVA OS components will remain open source or freely licensed indefinitely.
+
+The long-term licensing and commercialization strategy will be determined as the technology and ecosystem mature.
+
+Future possibilities may include different licensing or distribution models for:
+
+* Community components
+* Research and educational use
+* Developer tools
+* Core platform components
+* Commercial applications
+* Enterprise capabilities
+* Advanced AI capabilities
+* Safety and certification features
+* Hardware-specific integrations
+
+The project architecture is therefore being designed to allow clear separation between foundational interfaces, community software, and potential commercial components.
+
+---
+
+# Repository Structure
+
+KRITVA OS will initially follow a modular monorepo approach.
 
 ```text
 KritvaOS/
@@ -397,11 +443,11 @@ KritvaOS/
 └── CONTRIBUTING.md
 ```
 
-As the interfaces mature, individual components may be separated into independent repositories where appropriate.
+As the architecture matures, individual components may be separated into independent repositories where there is a clear technical or organizational benefit.
 
 ---
 
-# Development Phases
+# Development Roadmap
 
 ## Phase 0 — Foundation
 
@@ -437,8 +483,8 @@ As the interfaces mature, individual components may be separated into independen
 
 * Joint control
 * Motion primitives
-* Kinematics
 * Robot model
+* Kinematics
 * Basic locomotion framework
 
 ## Phase 4 — Kritva Mind
@@ -475,9 +521,9 @@ As the interfaces mature, individual components may be separated into independen
 
 ---
 
-# Repository Status
+# Current Status
 
-> **Status: Early Architecture / Pre-Alpha**
+> 🚧 **Early Architecture / Pre-Alpha**
 
 KRITVA OS is currently under active architecture and implementation development.
 
@@ -487,7 +533,9 @@ APIs, module boundaries, interfaces, and implementation details may change signi
 
 # Contributing
 
-KRITVA OS is intended to evolve through collaboration between:
+We welcome technical feedback, experimentation, ideas, and contributions as the project evolves.
+
+Potential contributors include:
 
 * Robotics engineers
 * Embedded engineers
@@ -497,59 +545,36 @@ KRITVA OS is intended to evolve through collaboration between:
 * Simulation engineers
 * Hardware developers
 * Researchers
-* Students and robotics enthusiasts
+* Students
+* Robotics enthusiasts
 
-Contribution guidelines will be added as the project structure stabilizes.
+Contribution guidelines will evolve together with the project.
 
 ---
 
-# Roadmap
+# Project Philosophy
 
-The initial roadmap focuses on building the foundational runtime and interfaces before expanding into advanced humanoid capabilities.
+The name **KRITVA** is inspired by the idea of **creation, making, and bringing capability into existence**.
+
+A humanoid robot represents the convergence of:
 
 ```text
-Foundation
-    ↓
-Kritva Core
-    ↓
-Hardware Abstraction
-    ↓
-Sense + Motion
-    ↓
-Mind
-    ↓
-Skill
-    ↓
-Simulation
-    ↓
-SDK
-    ↓
-Humanoid Applications
+Intelligence
+     +
+Perception
+     +
+Body
+     +
+Action
+     +
+Learning
 ```
 
----
+KRITVA OS aims to provide the software foundation that brings these elements together into an **artificial embodied agent**.
 
-# Philosophy
-
-The name **KRITVA** is inspired by the Indian philosophical idea of creation and making.
-
-A humanoid robot represents a convergence of:
-
-**Intelligence + Body + Perception + Action**
-
-KRITVA OS is intended to provide the software foundation that brings these elements together into an **artificial embodied agent**.
-
-> **From perception to intelligence.
-> From intelligence to action.
-> From action to capability.**
-
----
-
-# License
-
-License: **TBD**
-
-The licensing model will be defined as the architecture and project governance mature.
+> **From perception to intelligence.**
+> **From intelligence to action.**
+> **From action to capability.**
 
 ---
 
@@ -557,15 +582,11 @@ The licensing model will be defined as the architecture and project governance m
 
 **KRITVA OS**
 
-**Humanoid Robotics Operating System**
+### Humanoid Robotics Operating System
 
-GitHub:
+**GitHub:** `github.com/KritvaOS/KritvaOS`
 
-`github.com/KritvaOS/KritvaOS`
-
-Website:
-
-`kritvaos.com`
+**Website:** `kritvaos.in`
 
 ---
 
