@@ -728,11 +728,90 @@ implementing it.
 
 ---
 
-## 23. Monorepo and Future Submodules
+## 23. Monorepo and Git Submodules
 
-Kritva initially uses a modular monorepo.
+KritvaOS uses a hybrid repository architecture.
 
-Some components may later become independent repositories or Git submodules.
+The top-level KritvaOS repository contains the common platform integration and
+may integrate selected components as Git submodules. A directory must NOT be
+assumed to belong to the top-level repository solely because it exists under
+the KritvaOS directory.
+
+### Current Git Submodule Map
+
+The following table is the authoritative documentation of the intended current
+submodule layout. It MUST be kept synchronized with `.gitmodules`.
+
+| Path | Component | Repository | Status |
+|---|---|---|---|
+| `<actual-submodule-path>` | `<component>` | `<repository>` | Git submodule |
+
+If no submodules are currently configured, this table MUST explicitly state:
+
+> No Git submodules are currently configured.
+
+Do not list a directory as a current Git submodule unless it is actually
+configured as one in `.gitmodules`.
+
+### Git ownership verification
+
+Before modifying files under a component directory, agents MUST determine
+whether the directory is:
+
+- owned by the parent KritvaOS repository
+- a Git submodule
+- an independent repository not currently integrated
+- unknown
+
+For this determination, inspect:
+
+```text
+.gitmodules
+git submodule status
+git status
+```
+
+When appropriate, inspect the Git metadata of the component directory as well.
+
+If documentation and actual Git state disagree, report the discrepancy before
+modifying files.
+
+### Submodule rules
+
+For a Git submodule:
+
+- Treat the submodule as an independently owned repository.
+- Do not modify the submodule from a parent-repository task unless explicitly
+  requested.
+- Do not change the submodule commit recorded by the parent repository unless
+  explicitly requested.
+- Do not create, delete, rename, or reorganize files inside a submodule as
+  part of a parent-repository task unless the task explicitly includes that
+  submodule.
+- Do not initialize, update, switch, or change submodule branches without
+  explicit approval.
+- Do not automatically commit submodule changes from the parent repository.
+- Before modifying a submodule, report:
+  - submodule path
+  - repository URL
+  - current commit
+  - branch/detached state
+  - working-tree status
+  - whether the parent repository pointer will change
+
+### Updating a submodule
+
+When a submodule is intentionally changed:
+
+1. Work in the submodule repository.
+2. Read and follow its own `AGENTS.md` and repository instructions.
+3. Implement and validate the change in the submodule repository.
+4. Commit the submodule repository separately.
+5. Update the parent repository's submodule pointer.
+6. Validate the parent repository.
+7. Report both the submodule commit and parent-repository pointer change.
+
+### Repository splitting
 
 Do not create a new repository or submodule merely to separate a small
 component.
@@ -746,6 +825,9 @@ Repository splitting should be justified by factors such as:
 - hardware/vendor boundary
 - build independence
 - organizational scaling
+
+Until an actual split is approved and configured, treat the component as part
+of the existing KritvaOS repository.
 
 ---
 
@@ -1157,8 +1239,61 @@ that:
 10. is understandable by future engineers
 
 ---
+## 42. Git Repository and Submodule Policy
 
-## 42. Final Rule
+KritvaOS uses a hybrid repository architecture.
+
+The top-level KritvaOS repository integrates selected components as Git submodules.
+A directory must NOT be assumed to be part of the top-level repository solely because
+it exists under the KritvaOS directory.
+
+### 43. Git ownership
+
+Before modifying files under a component directory:
+
+1. Determine whether the directory is a Git submodule.
+2. Check `.gitmodules`.
+3. Check Git status from the component directory.
+4. Identify the owning repository and current commit.
+5. Respect the component repository's own `AGENTS.md` and development instructions.
+
+### 44. Submodule rules
+
+For a Git submodule:
+
+- Treat the submodule as an independently owned repository.
+- Do not modify the submodule from the parent repository unless explicitly requested.
+- Do not change the submodule commit recorded by the parent repository unless explicitly requested.
+- Do not create, delete, rename, or reorganize files inside a submodule as part of
+  a parent-repository task unless the task explicitly includes that submodule.
+- Do not commit submodule changes to the parent repository automatically.
+- Do not initialize, update, switch, or change submodule branches without explicit approval.
+- Before modifying a submodule, report:
+  - submodule path
+  - repository URL
+  - current commit
+  - branch/detached state
+  - working-tree status
+
+### 45. Parent repository changes
+
+When a submodule is intentionally updated:
+
+1. Make and validate the changes in the submodule repository.
+2. Commit the submodule repository separately.
+3. Update the parent repository's submodule pointer.
+4. Validate the parent repository.
+5. Report both commits clearly.
+
+### 46. Unknown ownership
+
+If ownership of a directory is unclear, stop before modifying it and report the
+detected Git structure.
+
+Never assume that a normal directory is a parent-repository directory.
+---
+
+## 47. Final Rule
 
 The most important rule for every AI agent working on Kritva is:
 
