@@ -1,0 +1,110 @@
+---
+Language: Cpp
+
+BasedOnStyle: LLVM
+
+# ---------------------------------------------------------------------------
+# General
+# ---------------------------------------------------------------------------
+
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+
+ColumnLimit: 100
+
+AccessModifierOffset: -4
+NamespaceIndentation: None
+
+# ---------------------------------------------------------------------------
+# Braces / Control Statements
+# ---------------------------------------------------------------------------
+
+BreakBeforeBraces: Attach
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: Never
+AllowShortBlocksOnASingleLine: Never
+
+IndentCaseLabels: true
+
+# ---------------------------------------------------------------------------
+# Includes
+# ---------------------------------------------------------------------------
+
+IncludeBlocks: Regroup
+SortIncludes: CaseSensitive
+
+IncludeCategories:
+  - Regex: '^"kritva/'
+    Priority: 1
+  - Regex: '^<kritva/'
+    Priority: 1
+  - Regex: '^<.*'
+    Priority: 2
+  - Regex: '.*'
+    Priority: 3
+
+# ---------------------------------------------------------------------------
+# C++
+# ---------------------------------------------------------------------------
+
+Standard: c++20
+
+Cpp11BracedListStyle: true
+ConstructorInitializerIndentWidth: 4
+PackConstructorInitializers: CurrentLine
+
+BreakConstructorInitializers: BeforeComma
+BreakInheritanceList: BeforeComma
+
+# ---------------------------------------------------------------------------
+# Pointers / References
+# ---------------------------------------------------------------------------
+
+PointerAlignment: Left
+ReferenceAlignment: Left
+
+DerivePointerAlignment: false
+
+# ---------------------------------------------------------------------------
+# Functions
+# ---------------------------------------------------------------------------
+
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackArguments: false
+BinPackParameters: false
+
+# ---------------------------------------------------------------------------
+# Classes / Structs
+# ---------------------------------------------------------------------------
+
+EmptyLineBeforeAccessModifier: LogicalBlock
+
+# ---------------------------------------------------------------------------
+# Comments
+# ---------------------------------------------------------------------------
+
+ReflowComments: true
+
+# ---------------------------------------------------------------------------
+# Macros
+# ---------------------------------------------------------------------------
+
+MacroBlockBegin: ''
+MacroBlockEnd: ''
+
+# ---------------------------------------------------------------------------
+# Modern C++
+# ---------------------------------------------------------------------------
+
+SpaceBeforeParens: ControlStatements
+
+SpacesInAngles: false
+SpacesInContainerLiterals: false
+
+# ---------------------------------------------------------------------------
+# Files
+# ---------------------------------------------------------------------------
+
+InsertNewlineAtEOF: true

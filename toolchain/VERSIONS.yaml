@@ -1,0 +1,460 @@
+# ============================================================================
+# KritvaOS Toolchain Definition
+# ============================================================================
+#
+# This file is the authoritative definition of the KritvaOS development
+# toolchain.
+#
+# Rules:
+#   - Minimum versions define compatibility.
+#   - Recommended versions define the validated v0.1 environment.
+#   - Release versions may freeze exact versions.
+#   - TBD tools are intentionally not validated until their workstream starts.
+#
+# ============================================================================
+
+schema_version: "1.0"
+
+project:
+  name: "KritvaOS"
+  version: "0.1.0"
+  status: "pre-alpha"
+
+# ============================================================================
+# Language Standards
+# ============================================================================
+
+language:
+
+  cpp:
+    standard: "c++20"
+
+  python:
+    minimum: "3.12.0"
+    recommended: "3.12.x"
+
+  systemverilog:
+    standard: "IEEE-1800-2017"
+    status: "planned"
+
+# ============================================================================
+# Core Development Toolchain
+# ============================================================================
+
+toolchain:
+
+  # --------------------------------------------------------------------------
+  # Build System
+  # --------------------------------------------------------------------------
+
+  build:
+
+    cmake:
+      required: true
+      minimum: "3.24.0"
+      recommended: "3.28.x"
+
+    ninja:
+      required: true
+      minimum: "1.11.0"
+      recommended: "1.11.x"
+
+  # --------------------------------------------------------------------------
+  # C / C++ Compiler
+  # --------------------------------------------------------------------------
+
+  compiler:
+
+    clang:
+      required: true
+      minimum: "18.0.0"
+      recommended: "18.x"
+
+    clang_format:
+      required: true
+      minimum: "18.0.0"
+      recommended: "18.x"
+
+    clang_tidy:
+      required: false
+      minimum: "18.0.0"
+      recommended: "18.x"
+
+    gcc:
+      required: false
+      minimum: "13.0.0"
+      recommended: "13.x"
+      purpose: "Secondary compiler / portability validation"
+
+  # --------------------------------------------------------------------------
+  # Python
+  # --------------------------------------------------------------------------
+
+  python:
+
+    required: true
+    minimum: "3.12.0"
+    recommended: "3.12.x"
+
+    package_manager:
+
+      pip:
+        required: false
+        minimum: "24.0"
+
+    packages:
+
+      pyyaml:
+        required: true
+        version: "6.x"
+
+  # --------------------------------------------------------------------------
+  # Version Control
+  # --------------------------------------------------------------------------
+
+  git:
+
+    required: true
+    minimum: "2.40.0"
+    recommended: "2.43.x"
+
+# ============================================================================
+# Host requirement
+# ============================================================================
+host_requirements:
+  docker:
+    required: true
+    minimum: "24.0.0"
+    recommended: "28.x"
+
+# ============================================================================
+# Simulation
+# ============================================================================
+
+simulation:
+
+  renode:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+  verilator:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+  iverilog:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+# ============================================================================
+# Hardware / FPGA / SoC
+# ============================================================================
+
+hardware:
+
+  # --------------------------------------------------------------------------
+  # AMD / Xilinx
+  # --------------------------------------------------------------------------
+
+  vivado:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+  vitis:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+  # --------------------------------------------------------------------------
+  # Intel FPGA
+  # --------------------------------------------------------------------------
+
+  quartus:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+  # --------------------------------------------------------------------------
+  # RISC-V
+  # --------------------------------------------------------------------------
+
+  riscv_gnu_toolchain:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+  # --------------------------------------------------------------------------
+  # ARM
+  # --------------------------------------------------------------------------
+
+  arm_gnu_toolchain:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+# ============================================================================
+# Robotics / Middleware
+# ============================================================================
+
+robotics:
+
+  ros2:
+    required: false
+    distribution: "TBD"
+    version: "TBD"
+    status: "planned"
+
+  ros2_control:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+  micro_ros:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+  ethercat:
+    required: false
+    implementation: "TBD"
+    version: "TBD"
+    status: "planned"
+
+# ============================================================================
+# AI / ML
+# ============================================================================
+
+ai:
+
+  pytorch:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+  onnx:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+  onnxruntime:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+# ============================================================================
+# Documentation
+# ============================================================================
+
+documentation:
+
+  doxygen:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+  sphinx:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+# ============================================================================
+# Static Analysis / Quality
+# ============================================================================
+
+quality:
+
+  cppcheck:
+    required: false
+    version: "TBD"
+    status: "planned"
+
+  clang_static_analyzer:
+    required: false
+    version: "18.x"
+    status: "planned"
+
+  gcov:
+    required: false
+    version: "13.x"
+    status: "planned"
+
+  llvm_cov:
+    required: false
+    version: "18.x"
+    status: "planned"
+
+# ============================================================================
+# Standard Development Profiles
+# ============================================================================
+
+profiles:
+
+  # --------------------------------------------------------------------------
+  # Core developer profile
+  # --------------------------------------------------------------------------
+
+  default:
+    - cmake
+    - ninja
+    - clang
+    - clang_format
+    - python
+    - git
+
+  # --------------------------------------------------------------------------
+  # CI profile
+  # --------------------------------------------------------------------------
+
+  ci:
+    - cmake
+    - ninja
+    - clang
+    - clang_format
+    - clang_tidy
+    - python
+    - git
+
+  # --------------------------------------------------------------------------
+  # Simulation profile
+  # --------------------------------------------------------------------------
+
+  simulation:
+    extends: "ci"
+    additional:
+      - renode
+      - verilator
+
+  # --------------------------------------------------------------------------
+  # SoC / FPGA profile
+  # --------------------------------------------------------------------------
+
+  soc:
+    extends: "ci"
+    additional:
+      - renode
+      - verilator
+      - vivado
+      - vitis
+      - quartus
+      - riscv_gnu_toolchain
+      - arm_gnu_toolchain
+
+  # --------------------------------------------------------------------------
+  # Robotics integration profile
+  # --------------------------------------------------------------------------
+
+  robotics:
+    extends: "ci"
+    additional:
+      - ros2
+      - ros2_control
+      - micro_ros
+      - ethercat
+
+  # --------------------------------------------------------------------------
+  # Full development profile
+  # --------------------------------------------------------------------------
+
+  full:
+    extends: "soc"
+    additional:
+      - ros2
+      - ros2_control
+      - micro_ros
+      - ethercat
+      - pytorch
+      - onnx
+      - onnxruntime
+
+# ============================================================================
+# Version Policy
+# ============================================================================
+
+version_policy:
+
+  # Minimum versions define compatibility requirements.
+  minimum_versions_are_binding: true
+
+  # Recommended versions define the validated development environment.
+  recommended_versions_are_binding_for_ci: true
+
+  # Release branches may freeze exact patch versions.
+  release_branches_use_exact_versions: true
+
+  # Development branches may use compatible versions.
+  development_branches_allow_compatible_versions: true
+
+  # Major version changes require explicit review.
+  major_version_change_requires_review: true
+
+  # Toolchain changes require an ADR or equivalent decision.
+  toolchain_change_requires_adr: true
+
+# ============================================================================
+# Reproducibility
+# ============================================================================
+
+reproducibility:
+
+  source_of_truth:
+    file: "toolchain/VERSIONS.yaml"
+
+  developer_environment:
+    containerized: true
+    devcontainer: true
+    image: "kritvaos-dev:0.1"
+
+
+  ci_environment:
+    containerized: true
+    image: "kritvaos-dev:0.1"
+
+  release_environment:
+    containerized: true
+    image: "kritvaos-dev:0.1"
+
+    exact_versions_required: true
+
+  lockfiles:
+    python: "planned"
+    system_packages: "planned"
+    container_image_digest: "planned"
+
+# ============================================================================
+# Compatibility
+# ============================================================================
+
+compatibility:
+
+  host_os:
+    supported:
+      - "Ubuntu 24.04 LTS"
+
+  development_architectures:
+    - "x86_64"
+    - "aarch64"
+
+  target_architectures:
+    - "x86_64"
+    - "aarch64"
+    - "riscv64"
+    - "riscv32"
+    - "arm"
+
+# ============================================================================
+# Baseline Status
+# ============================================================================
+
+status:
+
+  baseline: "v0.1"
+  established: "2026-09-14"
+
+  notes:
+    - "Core development toolchain is defined."
+    - "The v0.1 container baseline targets Ubuntu 24.04 LTS."
+    - "Simulation, FPGA, robotics and AI tools remain TBD until their workstreams begin."
+    - "Exact release tool versions will be frozen before production release."

@@ -1,0 +1,56 @@
+name: KritvaOS CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+  pull_request:
+    branches:
+      - main
+      - master
+      - develop
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kritvaos-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  toolchain:
+    name: Toolchain Validation
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build KritvaOS development container
+        run: |
+          docker build \
+            -f .devcontainer/Dockerfile \
+            -t kritvaos-dev:0.1 \
+            .
+
+      - name: Validate CI toolchain
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspaces/KritvaOS" \
+            -w /workspaces/KritvaOS \
+            kritvaos-dev:0.1 \
+            python3 scripts/check_toolchain.py \
+              --profile ci \
+              --strict
+
+      - name: Validate toolchain JSON
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspaces/KritvaOS" \
+            -w /workspaces/KritvaOS \
+            kritvaos-dev:0.1 \
+            python3 scripts/check_toolchain.py \
+              --profile ci \
+              --json

@@ -1,0 +1,129 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 24,
+    "patch": 0
+  },
+
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+
+      "cacheVariables": {
+        "CMAKE_CXX_STANDARD": "20",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "CMAKE_CXX_EXTENSIONS": "OFF",
+
+        "KRITVA_BUILD_TESTS": "ON",
+        "KRITVA_BUILD_EXAMPLES": "ON",
+        "KRITVA_BUILD_TOOLS": "ON",
+        "KRITVA_BUILD_SIM": "ON",
+        "KRITVA_BUILD_SOC": "OFF",
+        "KRITVA_ENABLE_WARNINGS": "ON"
+      }
+    },
+
+    {
+      "name": "debug",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+
+    {
+      "name": "release",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+
+    {
+      "name": "asan",
+      "inherits": "debug",
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-fsanitize=address -fno-omit-frame-pointer",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address",
+        "CMAKE_SHARED_LINKER_FLAGS": "-fsanitize=address"
+      }
+    },
+
+    {
+      "name": "minimal",
+      "inherits": "base",
+      "cacheVariables": {
+        "KRITVA_BUILD_TESTS": "OFF",
+        "KRITVA_BUILD_EXAMPLES": "OFF",
+        "KRITVA_BUILD_TOOLS": "OFF",
+        "KRITVA_BUILD_SIM": "OFF",
+        "KRITVA_BUILD_SOC": "OFF"
+      }
+    },
+
+    {
+      "name": "soc",
+      "inherits": "base",
+      "cacheVariables": {
+        "KRITVA_BUILD_SOC": "ON"
+      }
+    }
+  ],
+
+  "buildPresets": [
+    {
+      "name": "debug",
+      "configurePreset": "debug"
+    },
+
+    {
+      "name": "release",
+      "configurePreset": "release"
+    },
+
+    {
+      "name": "asan",
+      "configurePreset": "asan"
+    },
+
+    {
+      "name": "minimal",
+      "configurePreset": "minimal"
+    },
+
+    {
+      "name": "soc",
+      "configurePreset": "soc"
+    }
+  ],
+
+  "testPresets": [
+    {
+      "name": "debug",
+      "configurePreset": "debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+
+    {
+      "name": "release",
+      "configurePreset": "release",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+
+    {
+      "name": "asan",
+      "configurePreset": "asan",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
+  ]
+}
